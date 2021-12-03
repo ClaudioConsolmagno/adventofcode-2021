@@ -1,0 +1,23 @@
+plugins {
+	id 'org.jetbrains.kotlin.jvm' version '1.6.0'
+}
+
+group = 'dev.claudio'
+version = '0.0.1-SNAPSHOT'
+
+test {
+	useJUnitPlatform()
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation platform('org.jetbrains.kotlin:kotlin-bom')
+	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+	implementation 'org.apache.commons:commons-collections4:4.4'
+
+//	testImplementation 'org.jetbrains.kotlin:kotlin-test'
+//	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
+}
