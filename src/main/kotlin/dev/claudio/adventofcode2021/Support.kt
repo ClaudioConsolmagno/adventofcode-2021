@@ -8,5 +8,17 @@ class Support {
                 = object {}.javaClass.classLoader.getResourceAsStream(fileName)!!
             .bufferedReader()
             .readLines()
+        fun stringTranspose(list: List<String>): List<String> {
+            val tranposedList = mutableListOf<CharArray>()
+            (1..list[0].length).forEach{
+                tranposedList.add(" ".repeat(list.size).toCharArray())
+            }
+            list.forEachIndexed { index1, originalEntry ->
+                tranposedList.forEachIndexed { index, it ->
+                    it[index1] = originalEntry[index]
+                }
+            }
+            return tranposedList.map { String(it) }
+        }
     }
 }
