@@ -21,8 +21,8 @@ private class Day6 {
         val spawns = inputList.count {
             it == 0
         }
-        return inputList.map { it - 1 }
-            .map { if (it < 0) { 6 } else { it } }
+        return inputList
+            .map { if (it == 0) { 6 } else { it - 1 } }
             .plus((0 until spawns).map { 8 })
     }
 }
