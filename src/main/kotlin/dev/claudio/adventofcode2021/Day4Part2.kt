@@ -28,7 +28,7 @@ private class Day4Part2 {
                 boards.remove(winner)
             }
         }
-        println(lastWinner!! * lastMark!!) // 17884
+        println(lastWinner!! * lastMark!!)
     }
 
     data class Board(

@@ -22,7 +22,7 @@ private class Day2 {
         }
         println("forward: $horizontal")
         println("yAxis: $depth")
-        println("multiply: ${horizontal * depth}") //1693300
+        println("multiply: ${horizontal * depth}")
     }
 
     data class Command(val direction: Direction, val unit: Int)

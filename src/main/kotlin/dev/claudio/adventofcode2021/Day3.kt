@@ -35,6 +35,6 @@ private class Day3 {
         println(onesCount)
         println(gamma)
         println(epsilon)
-        println(Integer.parseInt(gamma,2)*Integer.parseInt(epsilon,2)) // 2583164
+        println(Integer.parseInt(gamma,2)*Integer.parseInt(epsilon,2))
     }
 }

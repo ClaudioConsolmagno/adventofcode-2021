@@ -21,7 +21,7 @@ private class Day4 {
             boards.forEach{ board -> board.hit(mark) }
             val winner: Board? = boards.firstOrNull { it.isWin() }
             if (winner != null) {
-                println(winner.winLossNumbers().second.sum() * mark) // 74320
+                println(winner.winLossNumbers().second.sum() * mark)
                 return
             }
         }

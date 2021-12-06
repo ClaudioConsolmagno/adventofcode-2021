@@ -16,6 +16,6 @@ private class Day1 {
             val next = iterator.peek()
             if (next != null && next > current) increased++
         }
-        println(increased) // 1692
+        println(increased)
     }
 }

@@ -35,7 +35,7 @@ private class Day3Part2 {
         println(Integer.parseInt(transposedInput2.joinToString(""),2))
         val oxygen = transposedInput.joinToString("")
         val co2 = transposedInput2.joinToString("")
-        println(Integer.parseInt(oxygen,2)*Integer.parseInt(co2,2)) // 586920 answer too low
+        println(Integer.parseInt(oxygen,2)*Integer.parseInt(co2,2))
     }
 
     private fun dropEntries(transposedInput: List<String>, bitCriteria: Char, index: Int): List<String> {
