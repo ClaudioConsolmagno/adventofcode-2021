@@ -1,14 +1,15 @@
 package dev.claudio.adventofcode2021
 
 fun main() {
-    Day11().main()
+    Day11Part2().main()
 }
 
-private class Day11 {
+private class Day11Part2 {
     fun main() {
         val input: List<String> = Support.readFileAsListString("day11-input.txt")
         val map: MutableList<MutableList<Int>> = input
             .map { it.toCharArray().map { it2 -> it2.titlecase().toInt() }.toMutableList() }.toMutableList()
+        val boardSize: Long = (map.size * map[0].size).toLong()
         (0 until map.size).forEach {
             map[it].add(0, Int.MIN_VALUE)
             map[it].add(Int.MIN_VALUE)
@@ -17,8 +18,7 @@ private class Day11 {
         map.add((0 until map[0].size).map { Int.MIN_VALUE }.toMutableList())
 //        map.forEach{ println(it) }
 
-        var flashesTotal = 0L
-        (0 until 100).forEach { _ ->
+        (0 until 1000).forEach { it ->
             var flashed = step(map)
             val allFlashed: MutableSet<Pair<Int, Int>> = flashed.toMutableSet()
             while (flashed.isNotEmpty()) {
@@ -27,10 +27,11 @@ private class Day11 {
                 }.toMutableSet()
                 allFlashed.addAll(flashed)
             }
-            flashesTotal += cleanStep(map)
-//            map.forEach{ println(it) }
+            if(cleanStep(map) == boardSize) {
+                println(it+1)
+                return
+            }
         }
-        println(flashesTotal)
     }
 
     private fun cleanStep(map: MutableList<MutableList<Int>>): Long {
