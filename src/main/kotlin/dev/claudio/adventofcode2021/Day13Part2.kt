@@ -4,10 +4,10 @@ import dev.claudio.adventofcode2021.Support.Companion.printGrid
 import java.awt.Point
 
 fun main() {
-    Day13().main()
+    Day13Part2().main()
 }
 
-private class Day13 {
+private class Day13Part2 {
     fun main() {
         val input: List<String> = Support.readFileAsListString("day13-input.txt")
 
@@ -15,7 +15,6 @@ private class Day13 {
             val split = it.split(",")
             Point(split[0].toInt(), split[1].toInt())
         }.toMutableSet()
-//        coords.printGrid()
         val folds: List<Point> = input.filter { it.startsWith("fold") }.map {
             val split = it.split(" ")
             val split2 = split[2].split("=")
@@ -26,7 +25,7 @@ private class Day13 {
             }
         }
 
-        folds.take(1).forEach { fold ->
+        folds.forEach { fold ->
             if (fold.y >= 0) {
                 val foldedCoords: List<Point> = coords.filter { it.y > fold.y }.map { Point(it.x, fold.y - (it.y - fold.y)) }
                 coords.removeIf { it.y >= fold.y }
@@ -38,7 +37,6 @@ private class Day13 {
                 coords.addAll(foldedCoords)
             }
         }
-//        coords.printGrid()
-        println(coords.size)
+        coords.printGrid()
     }
 }

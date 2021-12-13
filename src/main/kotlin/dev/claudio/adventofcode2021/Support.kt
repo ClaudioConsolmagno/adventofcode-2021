@@ -31,9 +31,9 @@ class Support {
             (0 .. ySize).forEach { y ->
                 (0 .. xSize).forEach { x ->
                     if (pointsSet.contains(Point(x,y))) {
-                        print("#")
+                        print("# ")
                     } else {
-                        print(".")
+                        print(". ")
                     }
                 }
                 println()
