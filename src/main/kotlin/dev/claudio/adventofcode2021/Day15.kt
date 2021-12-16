@@ -31,10 +31,10 @@ private class Day15 {
             }
         }
         input.forEachIndexed{ y, str ->
-            str.toList().forEachIndexed { x, yStr ->
+            str.toList().forEachIndexed { x, weight ->
                 val currentPoint = Point(x, y)
                 currentPoint.surroundingPoints4(maxPoint).forEach {
-                    graph.addEdge(currentPoint, it).apply { graph.setEdgeWeight(this, yStr.digitToInt().toDouble()) }
+                    graph.addEdge(currentPoint, it).apply { graph.setEdgeWeight(this, weight.digitToInt().toDouble()) }
                 }
             }
         }
