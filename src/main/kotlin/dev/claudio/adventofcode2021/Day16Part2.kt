@@ -4,17 +4,16 @@ import org.apache.commons.lang3.StringUtils
 import java.math.BigInteger
 
 fun main() {
-    Day16().main()
+    Day16Part2().main()
 }
 
-private class Day16 {
+private class Day16Part2 {
     fun main() {
         tests()
         val input: List<String> = Support.readFileAsListString("day16-input.txt")
         val inputBinary = processInput(input[0])
         val bits = processor(inputBinary)
-        println(bits)
-        println(sumAllVersions(bits))
+        println(bits.eval())
     }
 
     fun processInput(input: String) = input.toList()
@@ -85,18 +84,34 @@ private class Day16 {
     }
 
     class BITSLiteral(inputBinary: String, val literalDec: Long) : BITS(inputBinary){
+        override fun eval() : Long {
+            return literalDec
+        }
         override fun toString(): String {
             return "BITSLiteral(version=${getPacketVersion()}, typeId=${getTypeId()}, literalDec=$literalDec)"
         }
     }
 
     class BITSOperator(inputBinary: String, val packets: List<BITS>) : BITS(inputBinary){
+        override fun eval() : Long {
+            when(getTypeId()) {
+                0 -> return packets.sumOf { it.eval() }
+                1 -> return packets.fold(1L) { acc, bits -> acc * bits.eval() }
+                2 -> return packets.minOf { it.eval() }
+                3 -> return packets.maxOf { it.eval() }
+                5 -> return if (packets[0].eval() > packets[1].eval()) { 1L } else { 0L }
+                6 -> return if (packets[0].eval() < packets[1].eval()) { 1L } else { 0L }
+                7 -> return if (packets[0].eval() == packets[1].eval()) { 1L } else { 0L }
+            }
+            throw Error()
+        }
         override fun toString(): String {
             return "BITSOperator(version=${getPacketVersion()}, typeId=${getTypeId()}, packets=$packets)"
         }
     }
 
-    open class BITS(val inputBinary: String) {
+    abstract class BITS(val inputBinary: String) {
+        abstract fun eval() : Long
         fun getPacketVersion(): Int {
             return Integer.parseInt(inputBinary.substring(0, 3), 2)
         }
