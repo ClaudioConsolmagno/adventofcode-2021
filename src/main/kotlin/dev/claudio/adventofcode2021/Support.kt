@@ -60,6 +60,23 @@ class Support {
             println()
         }
 
+        fun Collection<Point>.printGridSimple() {
+            val minX = this.minOf { it.x }
+            val minY = this.minOf { it.y }
+            val maxX = this.maxOf { it.x }
+            val maxY = this.maxOf { it.y }
+            (minY..maxY).forEach { y ->
+                (minX..maxX).forEach { x ->
+                    if (this.contains(Point(x, y))) {
+                        print("#")
+                    } else {
+                        print(".")
+                    }
+                }
+                println()
+            }
+        }
+
         fun Point.surroundingPoints8(maxPoint: Point): Set<Point> {
             return (-1..1).flatMap { x ->
                     (-1..1).mapNotNull { y ->
@@ -77,5 +94,55 @@ class Support {
         fun Point.surroundingPoints4(maxPoint: Point): Set<Point> {
             return this.surroundingPoints8(maxPoint).filter { it.x == this.x || it.y == this.y }.toSet()
         }
+
+        fun <T> Collection<PointValue<T>>.surroundingPoints8(target: Point): Set<PointValue<T>> {
+            return (-1..1).flatMap { x ->
+                (-1..1).flatMap { y ->
+                    if (!(x == 0 && y == 0)) {
+                        this.filter { it.x == target.x + x && it.y == target.y + y }
+                    } else {
+                        listOf()
+                    }
+                }
+            }.toSet()
+        }
+
+        fun <T> Collection<PointValue<T>>.addPadding(value: T): Set<PointValue<T>> {
+            val minX = this.minOf { it.x } - 1
+            val minY = this.minOf { it.y } - 1
+            val maxX = this.maxOf { it.x } + 1
+            val maxY = this.maxOf { it.y } + 1
+            val result = this.toMutableSet()
+            (minY..maxY).forEach { y ->
+                result.add(PointValue(minX, y, value))
+                result.add(PointValue(maxX, y, value))
+            }
+            (minX..maxX).forEach { x ->
+                result.add(PointValue(x, minY, value))
+                result.add(PointValue(x, maxY, value))
+            }
+            return result.onEach { it.translate(1, 1) }
+        }
+
+        fun <T> Collection<PointValue<T>>.removePadding(): Set<PointValue<T>> {
+            val minX = this.minOf { it.x }
+            val minY = this.minOf { it.y }
+            val maxX = this.maxOf { it.x }
+            val maxY = this.maxOf { it.y }
+            return this.filterNot { it.x == minX || it.x == maxX || it.y == minY || it.y == maxY }
+                .onEach { it.translate(-1, -1) }
+                .toSet()
+        }
+
+        fun <T> Collection<PointValue<T>>.get(value: Point): PointValue<T>? {
+            return this.get(value.x, value.y)
+        }
+
+        fun <T> Collection<PointValue<T>>.get(x: Int, y: Int): PointValue<T>? {
+            return this.firstOrNull { it.x == x && it.y == y }
+        }
     }
+}
+
+open class PointValue<T>(x : Int, y: Int, var value: T) : Point(x,y) {
 }
