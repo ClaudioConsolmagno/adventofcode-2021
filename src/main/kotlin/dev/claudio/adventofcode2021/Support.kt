@@ -96,15 +96,16 @@ class Support {
         }
 
         fun <T> Collection<PointValue<T>>.surroundingPoints8(target: Point): Set<PointValue<T>> {
-            return (-1..1).flatMap { x ->
-                (-1..1).flatMap { y ->
-                    if (!(x == 0 && y == 0)) {
-                        this.filter { it.x == target.x + x && it.y == target.y + y }
-                    } else {
-                        listOf()
-                    }
-                }
-            }.toSet()
+            return setOfNotNull(
+                this.get(target.x - 1, target.y - 1),
+                this.get(target.x, target.y - 1),
+                this.get(target.x + 1, target.y - 1),
+                this.get(target.x - 1, target.y),
+                this.get(target.x + 1, target.y),
+                this.get(target.x - 1, target.y + 1),
+                this.get(target.x, target.y + 1),
+                this.get(target.x + 1, target.y + 1),
+            )
         }
 
         fun <T> Collection<PointValue<T>>.addPadding(value: T): Set<PointValue<T>> {
@@ -144,5 +145,4 @@ class Support {
     }
 }
 
-open class PointValue<T>(x : Int, y: Int, var value: T) : Point(x,y) {
-}
+open class PointValue<T>(x : Int, y: Int, var value: T) : Point(x,y)
